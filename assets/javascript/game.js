@@ -1,72 +1,32 @@
-// // Initializing global variables for page as an object
-
-// var guessGame = {
-//     heroArray: ["Superman", "Batman", "Rorschach", "Sentry", "Wolverine", "Cyclops","Polaris", "Havok", "Thor", "Psylocke", "Colossus"],
-//     winCounter: 0,
-//     guessCounter: 12,
-//     chosenHero: this.heroArray[Math.floor(Math.random() * this.heroArray.length)],
-// // Creating functions within the object to be called throughout
-
-// // Load a random word from the array
-//     chooseHero: function() {
-//         // var chosenHero = this.heroArray[Math.floor(Math.random() * this.heroArray.length)];
-        
-//         chosenHero = chosenHero.replace(/\s/g, "-");
-
-//         // document.getElementById("heroBlank").innerHTML = chosenHero;
-//     },
-
-//     disguisedHero: function() {
-//         wordHolder = document.getElementById("heroBlank");
-//         correct = document.createElement("ul");
-
-//         for (i = 0; i < this.chosenHero.length; i++) {
-//             correct.setAttribute("id", "my-hero");
-//             guess = document.createElement("li");
-//             guess.setAttribute("class", "guess");
-//             if (chosenHero[i] === "-") {
-//                 guess.innerHTML = "-";
-//                 space = 1;
-//               } else {
-//                 guess.innerHTML = "_";
-//               }
-//         }
-//     },
-// };
-
-
-// onload = guessGame.chooseHero();
-
-// // var heroArray = ["Superman", "Batman", "Rorschach", "Sentry", "Wolverine", "Cyclops","Polaris", "Havok", "Thor", "Psylocke", "Colossus"];
-
-// // function myFunction() {
-// //  heroArray[Math.floor(Math.random() * heroArray.length)];
-// // };
-// console.log(guessGame.disguisedHero());
-
-// console.log(myFunction());
 // Load window before executing functions
-window.onload = function() {
+// window.onload = function() {
 
 // Declare global variables
-var heroArray = ["Superman", "Batman", "Rorschach", "Sentry", "Wolverine", "Cyclops","Polaris", "Havok", "Thor", "Psylocke", "Colossus"];
-var winCounter = 0;
-var guessCounter = 10;
+var heroArray = ["superman", "batman", "rorschach", "sentry", "wolverine", "cyclops","polaris", "havok", "thor", "psylocke", "colossus"];
+var winCounter;
+var guessCounter;
 var alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h',
         'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's',
         't', 'u', 'v', 'w', 'x', 'y', 'z'];
 var chosenHero ;
 var userGuess ;
-var previousGuess = [];
-var space ;
+var heroStored = [];
+var correctGuess;
+var space;
 
 // Set up a new match with a new random hero chosen
 
 freshGame = function() {
     chosenHero = heroArray[Math.floor(Math.random() * heroArray.length)];
-    chosenHero = chosenHero.replace(/\s/gi, "-");
+    chosenHero = chosenHero.replace(/\s/g, "-");
     console.log(chosenHero);
+
+    // Reset win and guess counters to starting values in the html
+    
+    winCounter = 0;
     guessCounter = 10;
+    document.getElementById("winCounter").innerHTML = winCounter;
+    document.getElementById("guessCounter").innerHTML = guessCounter;
 }
 
 // Replace the chosenHero with underscores and place it in the #heroCol div
@@ -86,15 +46,40 @@ disguisedHero = function() {
         } else {
             disguisedLetter.innerHTML = "_";
         }
+
+        // Store the letters from the chosenHero as an array. Use to compare later for win/lose eval
+        
+        heroStored.push(disguisedLetter);
 // Add the chosen hero name, now translated into an ul of underscores, within the #heroCol div
-        heroHolder.appendChild(disguise);
+        
+heroHolder.appendChild(disguise);
         disguise.appendChild(disguisedLetter);
     }
+
+// Create keyup event function for registering userGuess. Only act upon alphabet characters
+
+document.onkeyup = function(event) {
+    var userGuess = event.key;
+    if (userGuess.toLowerCase() === alphabet.includes(userGuess)) {
+        // for (var x = 0; x < chosenHero.length; x++) {
+        //     if (chosenHero[x] === userGuess) {
+        //         disguisedLetter[x].innerHTML = userGuess;
+        //         correctGuess += 1;
+        //         console.log(userGuess);
+        //     }
+        // }
+        alert("That's in the alphabet!"); 
+    } else {
+        alert("That's not in the alphabet!");
+    }
+}
+
 }
 
 freshGame();
 // disguisedHero();
 
 disguisedHero();
-};
+
+// }
 
