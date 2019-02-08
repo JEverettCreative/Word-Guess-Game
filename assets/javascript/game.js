@@ -1,5 +1,5 @@
 // Load window before executing functions
-// window.onload = function() {
+window.onload = function() {
 
 // Declare global variables
 var heroArray = ["superman", "batman", "rorschach", "sentry", "wolverine", "cyclops","polaris", "havok", "thor", "psylocke", "colossus"];
@@ -13,6 +13,8 @@ var userGuess ;
 var heroStored = [];
 var correctGuess;
 var space;
+var disguise;
+var disguisedLetter;
 
 // Set up a new match with a new random hero chosen
 
@@ -52,7 +54,7 @@ disguisedHero = function() {
         heroStored.push(disguisedLetter);
 // Add the chosen hero name, now translated into an ul of underscores, within the #heroCol div
         
-heroHolder.appendChild(disguise);
+        heroHolder.appendChild(disguise);
         disguise.appendChild(disguisedLetter);
     }
 
@@ -60,18 +62,26 @@ heroHolder.appendChild(disguise);
 
 document.onkeyup = function(event) {
     var userGuess = event.key;
-    if (userGuess.toLowerCase() === alphabet.includes(userGuess)) {
-        // for (var x = 0; x < chosenHero.length; x++) {
-        //     if (chosenHero[x] === userGuess) {
-        //         disguisedLetter[x].innerHTML = userGuess;
-        //         correctGuess += 1;
-        //         console.log(userGuess);
-        //     }
-        // }
-        alert("That's in the alphabet!"); 
-    } else {
-        alert("That's not in the alphabet!");
-    }
+    // if (userGuess.toLowerCase() === userGuess.match("^[a-zA-Z]")) 
+        for (var i = 0; i < chosenHero.length; i++) {
+            var replaceLetter = document.getElementsByClassName("disguised-letter");
+            if (chosenHero[i] === userGuess) {
+                replaceLetter[i].innerHTML = userGuess;
+                correctGuess += 1;
+                alert(userGuess);
+            // } else {
+            //     document.getElementById("guessCounter").innerHTML = guessCounter;
+            //     guessCounter -= 1;
+            // }
+        }
+   
+        } 
+        var j = (chosenHero.indexOf(userGuess));
+            if (j === -1) {
+            document.getElementById("guessCounter").innerHTML = guessCounter;
+            guessCounter -= 1;
+        }
+    
 }
 
 }
@@ -81,5 +91,5 @@ freshGame();
 
 disguisedHero();
 
-// }
+}
 
