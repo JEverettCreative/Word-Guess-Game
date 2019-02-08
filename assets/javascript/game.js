@@ -86,7 +86,7 @@ disguisedHero = function() {
         } else {
             disguisedLetter.innerHTML = "_";
         }
-
+// Add the chosen hero name, now translated into an ul of underscores, within the #heroCol div
         heroHolder.appendChild(disguise);
         disguise.appendChild(disguisedLetter);
     }
@@ -95,6 +95,6 @@ disguisedHero = function() {
 freshGame();
 // disguisedHero();
 
-console.log(disguisedHero());
+disguisedHero();
 };
 
