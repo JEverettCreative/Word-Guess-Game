@@ -3,7 +3,7 @@ window.onload = function() {
 
 // Declare global variables
 var heroArray = ["superman", "batman", "rorschach", "sentry", "wolverine", "cyclops","polaris", "havok", "thor", "psylocke", "colossus"];
-var winCounter;
+var winCounter = 0;
 var guessCounter;
 var alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h',
         'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's',
@@ -12,6 +12,7 @@ var chosenHero ;
 var userGuess ;
 var heroStored = [];
 var incorrectGuesses;
+var correctGuess = 0;
 var space;
 var disguise;
 var disguisedLetter;
@@ -25,8 +26,8 @@ firstGame = function() {
 
     // Reset win and guess counters to starting values in the html
     
-    winCounter = 0;
-    guessCounter = 10;
+    // winCounter = 0;
+    guessCounter = 10; 
     document.getElementById("winCounter").innerHTML = winCounter;
     document.getElementById("guessCounter").innerHTML = guessCounter;
 }
@@ -57,7 +58,7 @@ disguisedHero = function() {
         heroHolder.appendChild(disguise);
         disguise.appendChild(disguisedLetter);
     }
-
+}
 // Create keyup event function for registering userGuess. (Only act upon alphabet characters is future goal.)
 
 document.onkeyup = function(event) {
@@ -79,15 +80,31 @@ document.onkeyup = function(event) {
             badGuess = document.createElement("li");
             badGuess.innerHTML = userGuess.toUpperCase();
             incorrectGuesses.appendChild(badGuess);
+            alert(guessCounter); // Testing
+            nextMatch();
         }
     
 }
-
+// Create a function to start the next match upon winning or losing
+nextMatch = function(){
+    if (guessCounter < 1) {
+        alert("Match lost! Try again.");
+        disguise.parentNode.removeChild(disguise);
+        firstGame();
+        disguisedHero();
+        while (incorrectGuesses.hasChildNodes()) {
+            incorrectGuesses.removeChild(incorrectGuesses.firstChild);
+        }
+        
+    }
 }
+
 
 firstGame();
 
 disguisedHero();
+
+
 
 }
 
