@@ -4,14 +4,15 @@ window.onload = function() {
 // Declare global variables
 var heroArray = ["superman", "batman", "rorschach", "sentry", "wolverine", "cyclops","polaris", "havok", "thor", "psylocke", "colossus"];
 var winCounter = 0;
-var guessCounter;
+var guessCounter; // Number of guesses remaining
 var alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h',
         'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's',
         't', 'u', 'v', 'w', 'x', 'y', 'z'];
-var chosenHero ;
-var userGuess ;
-var heroStored = [];
-var incorrectGuesses;
+var chosenHero; // Word to be guessed
+var userGuess; // User key input
+var heroStored = []; // Stored array of correct word's letters
+var incorrectGuesses; // Ul for storing bad guesses to show to user
+var badGuess; // Incorrect guess
 var correctGuess = 0;
 var space;
 var disguise;
@@ -26,7 +27,7 @@ firstGame = function() {
 
     // Reset win and guess counters to starting values in the html
     
-    // winCounter = 0;
+    correctGuess = 0;
     guessCounter = 10; 
     document.getElementById("winCounter").innerHTML = winCounter;
     document.getElementById("guessCounter").innerHTML = guessCounter;
@@ -43,7 +44,7 @@ disguisedHero = function() {
         disguisedLetter = document.createElement("li");
         disguisedLetter.setAttribute("class", "disguised-letter");
 
-        if (chosenHero[i] === "-") {
+        if (chosenHero[i] === " ") {
             disguisedLetter.innerHTML = "-";
             space = 1;
         } else {
@@ -69,6 +70,8 @@ document.onkeyup = function(event) {
             if (chosenHero[i] === userGuess) {
                 replaceLetter[i].innerHTML = userGuess.toUpperCase();
                 correctGuess += 1;
+                console.log(correctGuess);
+                nextMatch();
         }
    
         } 
@@ -80,7 +83,7 @@ document.onkeyup = function(event) {
             badGuess = document.createElement("li");
             badGuess.innerHTML = userGuess.toUpperCase();
             incorrectGuesses.appendChild(badGuess);
-            alert(guessCounter); // Testing
+            // Now reset for the next match
             nextMatch();
         }
     
@@ -95,7 +98,24 @@ nextMatch = function(){
         while (incorrectGuesses.hasChildNodes()) {
             incorrectGuesses.removeChild(incorrectGuesses.firstChild);
         }
+        while (heroStored.length) {
+            heroStored.pop();
+        }
         
+    }
+    
+    if (correctGuess === heroStored.length) {
+        alert("You win!");
+        winCounter += 1;
+        disguise.parentNode.removeChild(disguise);
+        firstGame();
+        disguisedHero();
+        while (incorrectGuesses.hasChildNodes()) {
+            incorrectGuesses.removeChild(incorrectGuesses.firstChild);
+        }
+        while (heroStored.length) {
+            heroStored.pop();
+        }
     }
 }
 
