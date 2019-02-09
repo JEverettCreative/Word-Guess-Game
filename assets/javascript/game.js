@@ -11,14 +11,14 @@ var alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h',
 var chosenHero ;
 var userGuess ;
 var heroStored = [];
-var correctGuess;
+var incorrectGuesses;
 var space;
 var disguise;
 var disguisedLetter;
 
 // Set up a new match with a new random hero chosen
 
-freshGame = function() {
+firstGame = function() {
     chosenHero = heroArray[Math.floor(Math.random() * heroArray.length)];
     chosenHero = chosenHero.replace(/\s/g, "-");
     console.log(chosenHero);
@@ -58,21 +58,16 @@ disguisedHero = function() {
         disguise.appendChild(disguisedLetter);
     }
 
-// Create keyup event function for registering userGuess. Only act upon alphabet characters
+// Create keyup event function for registering userGuess. (Only act upon alphabet characters is future goal.)
 
 document.onkeyup = function(event) {
-    var userGuess = event.key;
-    // if (userGuess.toLowerCase() === userGuess.match("^[a-zA-Z]")) 
+        userGuess = event.key;
+    // Compare userGuess to the chosenHero and place any replace correlating underscores with matches 
         for (var i = 0; i < chosenHero.length; i++) {
             var replaceLetter = document.getElementsByClassName("disguised-letter");
             if (chosenHero[i] === userGuess) {
-                replaceLetter[i].innerHTML = userGuess;
+                replaceLetter[i].innerHTML = userGuess.toUpperCase();
                 correctGuess += 1;
-                alert(userGuess);
-            // } else {
-            //     document.getElementById("guessCounter").innerHTML = guessCounter;
-            //     guessCounter -= 1;
-            // }
         }
    
         } 
@@ -80,14 +75,17 @@ document.onkeyup = function(event) {
             if (j === -1) {
             document.getElementById("guessCounter").innerHTML = guessCounter;
             guessCounter -= 1;
+            incorrectGuesses = document.getElementById("letters-guessed");
+            badGuess = document.createElement("li");
+            badGuess.innerHTML = userGuess.toUpperCase();
+            incorrectGuesses.appendChild(badGuess);
         }
     
 }
 
 }
 
-freshGame();
-// disguisedHero();
+firstGame();
 
 disguisedHero();
 
