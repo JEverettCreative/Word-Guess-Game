@@ -73,9 +73,9 @@ document.onkeyup = function(event) {
    
         } 
         var j = (chosenHero.indexOf(userGuess));
-            if (j === -1) {
-            document.getElementById("guessCounter").innerHTML = guessCounter;
+            if (j === -1) {         
             guessCounter -= 1;
+            document.getElementById("guessCounter").innerHTML = guessCounter;
             incorrectGuesses = document.getElementById("letters-guessed");
             badGuess = document.createElement("li");
             badGuess.innerHTML = userGuess.toUpperCase();
