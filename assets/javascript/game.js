@@ -67,14 +67,16 @@ document.onkeyup = function(event) {
     // Compare userGuess to the chosenHero and place any replace correlating underscores with matches 
         for (var i = 0; i < chosenHero.length; i++) {
             var replaceLetter = document.getElementsByClassName("disguised-letter");
+            
             if (chosenHero[i] === userGuess) {
                 replaceLetter[i].innerHTML = userGuess.toUpperCase();
                 correctGuess += 1;
                 console.log(correctGuess);
                 nextMatch();
         }
-   
-        } 
+    }
+        
+         
         var j = (chosenHero.indexOf(userGuess));
             if (j === -1) {         
             guessCounter -= 1;
@@ -104,18 +106,20 @@ nextMatch = function(){
         
     }
     
-    if (correctGuess === heroStored.length) {
+    if (correctGuess === chosenHero.length) {
         alert("You win!");
         winCounter += 1;
         disguise.parentNode.removeChild(disguise);
-        firstGame();
-        disguisedHero();
+        if (incorrectGuesses.hasChildNodes() === 1) {
         while (incorrectGuesses.hasChildNodes()) {
             incorrectGuesses.removeChild(incorrectGuesses.firstChild);
         }
+    }
         while (heroStored.length) {
             heroStored.pop();
         }
+        firstGame();
+        disguisedHero();
     }
 }
 
