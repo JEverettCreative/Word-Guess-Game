@@ -1,7 +1,7 @@
 // Load window before executing functions
 window.onload = function() {
 
-// Declare global variables
+// Global variables
 var heroArray = ["superman", "batman", "rorschach", "sentry", "wolverine", "cyclops",
         "polaris", "havok", "thor", "psylocke", "colossus", "flash", "nightwing", 
         "comedian", "deadpool"];
@@ -12,12 +12,11 @@ var userGuess; // User key input
 var incorrectGuesses; // List for storing wrong guesses made by user
 var badGuess; // Incorrect guess to go in above list
 var alreadyGuessed = [];
-var correctGuess = 0; // Counter for each letter guessed correctly. Used for scoring comparison
+var correctGuess = 0; // Counter for each correct guessed, used for scoring
 var disguise; // List to place hidden word on viewport as "_"
 var disguisedLetter; // Letters of chosenHero converted to "_"
 
 // Set up a new match with a new random hero chosen
-
 initializeGame = function() {
     chosenHero = heroArray[Math.floor(Math.random() * heroArray.length)];
     chosenHero = chosenHero.replace(/\s/g, "-");
@@ -29,7 +28,7 @@ initializeGame = function() {
     guessCounter = 10; 
     document.getElementById("winCounter").innerHTML = winCounter;
     document.getElementById("guessCounter").innerHTML = guessCounter; 
-    // Clear cache of guesses  
+    // Clear array of guesses  
     alreadyGuessed = [];
 }
 
@@ -62,14 +61,15 @@ disguisedHero = function() {
         disguise.appendChild(disguisedLetter);
     }
 }
-// Create keyup event function for registering userGuess. (Only act upon alphabet characters is future goal.)
 
+// Create keyup event that only acts upon alphabetic keyCodes
 document.onkeyup = function(event) {
         if (event.keyCode >= 65 && event.keyCode <= 90) {
         userGuess = event.key;
+
         // Check to make sure the userGuess has NOT been used already before proceeding
         if (alreadyGuessed.indexOf(userGuess) === -1) {
-    // Compare userGuess to the chosenHero and place any replace correlating underscores with matches 
+        // Compare userGuess to the chosenHero and replace correlating underscores with matches 
         for (var i = 0; i < chosenHero.length; i++) {
             var replaceLetter = document.getElementsByClassName("disguised-letter");
             
@@ -80,16 +80,16 @@ document.onkeyup = function(event) {
                 correctGuess += 1;
                 console.log(correctGuess);
                // Check to see if need reset for the next match
-                nextMatch();
+                
         }
     }
-        
-         
+     
+        // Find incorrect guesses and add them to that ul and the array alreadyGuessed
         var j = (chosenHero.indexOf(userGuess));
             if (j === -1) {         
             guessCounter -= 1;
             document.getElementById("guessCounter").innerHTML = guessCounter;
-            // incorrectGuesses = document.getElementById("incorrect-guessed");
+
             badGuess = document.createElement("li");
             badGuess.innerHTML = userGuess.toUpperCase();
             incorrectGuesses.appendChild(badGuess);
@@ -99,6 +99,7 @@ document.onkeyup = function(event) {
             nextMatch();
         }
         }   
+        nextMatch();
     }
 }
 // Create a function to start the next match upon winning or losing
