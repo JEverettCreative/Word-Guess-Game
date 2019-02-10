@@ -14,14 +14,14 @@
     font-size:1.6em;
   }
 
-#letters-guessed {
+#incorrect-guessed {
     margin: 0;
     display: block;
     padding: 0;
     display:block;
   }
 
-#letters-guessed li {
+#incorrect-guessed li {
     position: relative;
     list-style: none;
     margin: 0;

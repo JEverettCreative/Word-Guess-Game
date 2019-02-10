@@ -3,24 +3,22 @@ window.onload = function() {
 
 // Declare global variables
 var heroArray = ["superman", "batman", "rorschach", "sentry", "wolverine", "cyclops","polaris", "havok", "thor", "psylocke", "colossus"];
-var winCounter = 0;
+var winCounter = 0; // Number of user wins
 var guessCounter; // Number of guesses remaining
 var alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h',
         'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's',
         't', 'u', 'v', 'w', 'x', 'y', 'z'];
 var chosenHero; // Word to be guessed
 var userGuess; // User key input
-var heroStored = []; // Stored array of correct word's letters
-var incorrectGuesses; // Ul for storing bad guesses to show to user
-var badGuess; // Incorrect guess
-var correctGuess = 0;
-var space;
-var disguise;
-var disguisedLetter;
+var incorrectGuesses; // List for storing wrong guesses made by user
+var badGuess; // Incorrect guess to go in above list
+var correctGuess = 0; // Counter for each letter guessed correctly. Used for scoring comparison
+var disguise; // List to place hidden word on viewport as "_"
+var disguisedLetter; // Letters of chosenHero converted to "_"
 
 // Set up a new match with a new random hero chosen
 
-firstGame = function() {
+initializeGame = function() {
     chosenHero = heroArray[Math.floor(Math.random() * heroArray.length)];
     chosenHero = chosenHero.replace(/\s/g, "-");
     console.log(chosenHero);
@@ -36,8 +34,15 @@ firstGame = function() {
 // Replace the chosenHero with underscores and place it in the #heroCol div
 
 disguisedHero = function() {
+    // Target the heroCol div and create a list named disguise for the choseHero
     heroHolder = document.getElementById("heroCol");
     disguise = document.createElement("ul");
+    // Create a new ul for badGuess to go into during game, assign attr, place in div guessedCol
+    guessHolder = document.getElementById("guessed-Col");
+    incorrectGuesses = document.createElement("ul")
+    incorrectGuesses.setAttribute("class", "incorrect-guessed");
+    guessHolder.appendChild(incorrectGuesses);
+
 
     for (var i = 0; i < chosenHero.length; i++) {
         disguise.setAttribute("id", "my-hero");
@@ -46,16 +51,11 @@ disguisedHero = function() {
 
         if (chosenHero[i] === " ") {
             disguisedLetter.innerHTML = "-";
-            space = 1;
         } else {
             disguisedLetter.innerHTML = "_";
         }
 
-        // Store the letters from the chosenHero as an array. Use to compare later for win/lose eval
-        
-        heroStored.push(disguisedLetter);
-// Add the chosen hero name, now translated into an ul of underscores, within the #heroCol div
-        
+// Add the chosen hero name, now translated into an ul of underscores, within the #heroCol div       
         heroHolder.appendChild(disguise);
         disguise.appendChild(disguisedLetter);
     }
@@ -72,6 +72,7 @@ document.onkeyup = function(event) {
                 replaceLetter[i].innerHTML = userGuess.toUpperCase();
                 correctGuess += 1;
                 console.log(correctGuess);
+               // Check to see if need reset for the next match
                 nextMatch();
         }
     }
@@ -81,50 +82,50 @@ document.onkeyup = function(event) {
             if (j === -1) {         
             guessCounter -= 1;
             document.getElementById("guessCounter").innerHTML = guessCounter;
-            incorrectGuesses = document.getElementById("letters-guessed");
+            incorrectGuesses = document.getElementById("incorrect-guessed");
             badGuess = document.createElement("li");
             badGuess.innerHTML = userGuess.toUpperCase();
             incorrectGuesses.appendChild(badGuess);
-            // Now reset for the next match
+            // Check to see if need reset for the next match
             nextMatch();
         }
     
 }
 // Create a function to start the next match upon winning or losing
 nextMatch = function(){
+    // If user runs out of guesses, initiate game loss and reset
     if (guessCounter < 1) {
         alert("Match lost! Try again.");
         disguise.parentNode.removeChild(disguise);
-        firstGame();
-        disguisedHero();
-        while (incorrectGuesses.hasChildNodes()) {
-            incorrectGuesses.removeChild(incorrectGuesses.firstChild);
-        }
-        while (heroStored.length) {
-            heroStored.pop();
-        }
-        
+        incorrectGuesses.parentNode.removeChild(incorrectGuesses);
+        // while (incorrectGuesses.hasChildNodes()) {
+        //     incorrectGuesses.removeChild(incorrectGuesses.firstChild);
+        // }
+        initializeGame();
+        disguisedHero(); 
     }
-    
+
+    // Current attempt at scoring for a win.
     if (correctGuess === chosenHero.length) {
+        // If the counter of correctGuess reaches a number equal to the length of the chosenHero, intiate win and reset
         alert("You win!");
         winCounter += 1;
+        // Clear the existing chosenHero from html for reset
         disguise.parentNode.removeChild(disguise);
-        if (incorrectGuesses.hasChildNodes() === 1) {
-        while (incorrectGuesses.hasChildNodes()) {
-            incorrectGuesses.removeChild(incorrectGuesses.firstChild);
-        }
-    }
-        while (heroStored.length) {
-            heroStored.pop();
-        }
-        firstGame();
+        // Clear any existing bad guesses. Doesn't always work as expected yet.
+        incorrectGuesses.parentNode.removeChild(incorrectGuesses);
+    //     if (incorrectGuesses.hasChildNodes() === 1) {
+    //     while (incorrectGuesses.hasChildNodes()) {
+    //         incorrectGuesses.removeChild(incorrectGuesses.firstChild);
+    //     }
+    // }
+        initializeGame();
         disguisedHero();
     }
 }
 
 
-firstGame();
+initializeGame();
 
 disguisedHero();
 
