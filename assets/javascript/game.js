@@ -30,13 +30,12 @@ initializeGame = function() {
     correctGuess = 0;
     guessCounter = 10; 
     document.getElementById("winCounter").innerHTML = winCounter;
-    document.getElementById("guessCounter").innerHTML = guessCounter;
-
+    document.getElementById("guessCounter").innerHTML = guessCounter;   
 }
 
 // Replace the chosenHero with underscores and place it in the #heroCol div
-
 disguisedHero = function() {
+
     // Target the heroCol div and create a list named disguise for the choseHero
     heroHolder = document.getElementById("heroCol");
     disguise = document.createElement("ul");
@@ -66,6 +65,7 @@ disguisedHero = function() {
 // Create keyup event function for registering userGuess. (Only act upon alphabet characters is future goal.)
 
 document.onkeyup = function(event) {
+        if (event.keyCode >= 65 && event.keyCode <= 90) {
         userGuess = event.key;
     // Compare userGuess to the chosenHero and place any replace correlating underscores with matches 
         for (var i = 0; i < chosenHero.length; i++) {
@@ -92,36 +92,28 @@ document.onkeyup = function(event) {
             // Check to see if need reset for the next match
             nextMatch();
         }
-    
+    }
 }
 // Create a function to start the next match upon winning or losing
 nextMatch = function(){
     // If user runs out of guesses, initiate game loss and reset
     if (guessCounter < 1) {
         alert("Match lost! Try again.");
+        // Clear the existing chosenHero from html for reset
         disguise.parentNode.removeChild(disguise);
+        // Clear existing bad guesses and the ul to make room for new one on html reset
         incorrectGuesses.parentNode.removeChild(incorrectGuesses);
-        // while (incorrectGuesses.hasChildNodes()) {
-        //     incorrectGuesses.removeChild(incorrectGuesses.firstChild);
-        // }
         initializeGame();
         disguisedHero(); 
     }
 
-    // Current attempt at scoring for a win.
+    // Scoring process for a win.
     if (correctGuess === chosenHero.length) {
         // If the counter of correctGuess reaches a number equal to the length of the chosenHero, intiate win and reset
         alert("You win!");
         winCounter += 1;
-        // Clear the existing chosenHero from html for reset
         disguise.parentNode.removeChild(disguise);
-        // Clear any existing bad guesses. Doesn't always work as expected yet.
         incorrectGuesses.parentNode.removeChild(incorrectGuesses);
-    //     if (incorrectGuesses.hasChildNodes() === 1) {
-    //     while (incorrectGuesses.hasChildNodes()) {
-    //         incorrectGuesses.removeChild(incorrectGuesses.firstChild);
-    //     }
-    // }
         initializeGame();
         disguisedHero();
     }
