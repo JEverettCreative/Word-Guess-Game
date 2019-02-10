@@ -14,6 +14,7 @@ var chosenHero; // Word to be guessed
 var userGuess; // User key input
 var incorrectGuesses; // List for storing wrong guesses made by user
 var badGuess; // Incorrect guess to go in above list
+var alreadyGuessed = [];
 var correctGuess = 0; // Counter for each letter guessed correctly. Used for scoring comparison
 var disguise; // List to place hidden word on viewport as "_"
 var disguisedLetter; // Letters of chosenHero converted to "_"
@@ -30,7 +31,9 @@ initializeGame = function() {
     correctGuess = 0;
     guessCounter = 10; 
     document.getElementById("winCounter").innerHTML = winCounter;
-    document.getElementById("guessCounter").innerHTML = guessCounter;   
+    document.getElementById("guessCounter").innerHTML = guessCounter; 
+    // Clear cache of guesses  
+    alreadyGuessed = [];
 }
 
 // Replace the chosenHero with underscores and place it in the #heroCol div
@@ -67,12 +70,16 @@ disguisedHero = function() {
 document.onkeyup = function(event) {
         if (event.keyCode >= 65 && event.keyCode <= 90) {
         userGuess = event.key;
+        // Check to make sure the userGuess has NOT been used already before proceeding
+        if (alreadyGuessed.indexOf(userGuess) === -1) {
     // Compare userGuess to the chosenHero and place any replace correlating underscores with matches 
         for (var i = 0; i < chosenHero.length; i++) {
             var replaceLetter = document.getElementsByClassName("disguised-letter");
             
             if (chosenHero[i] === userGuess) {
                 replaceLetter[i].innerHTML = userGuess.toUpperCase();
+                // Add guess to array of previous guesses
+                alreadyGuessed.push(userGuess);
                 correctGuess += 1;
                 console.log(correctGuess);
                // Check to see if need reset for the next match
@@ -89,9 +96,12 @@ document.onkeyup = function(event) {
             badGuess = document.createElement("li");
             badGuess.innerHTML = userGuess.toUpperCase();
             incorrectGuesses.appendChild(badGuess);
+            // Add guess to array of previous guesses
+            alreadyGuessed.push(userGuess);
             // Check to see if need reset for the next match
             nextMatch();
         }
+        }   
     }
 }
 // Create a function to start the next match upon winning or losing
