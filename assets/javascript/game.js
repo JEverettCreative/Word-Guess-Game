@@ -7,9 +7,6 @@ var heroArray = ["superman", "batman", "rorschach", "sentry", "wolverine", "cycl
         "comedian", "deadpool"];
 var winCounter = 0; // Number of user wins
 var guessCounter; // Number of guesses remaining
-var alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h',
-        'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's',
-        't', 'u', 'v', 'w', 'x', 'y', 'z'];
 var chosenHero; // Word to be guessed
 var userGuess; // User key input
 var incorrectGuesses; // List for storing wrong guesses made by user
