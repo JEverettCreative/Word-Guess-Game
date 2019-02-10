@@ -2,7 +2,9 @@
 window.onload = function() {
 
 // Declare global variables
-var heroArray = ["superman", "batman", "rorschach", "sentry", "wolverine", "cyclops","polaris", "havok", "thor", "psylocke", "colossus"];
+var heroArray = ["superman", "batman", "rorschach", "sentry", "wolverine", "cyclops",
+        "polaris", "havok", "thor", "psylocke", "colossus", "flash", "nightwing", 
+        "comedian", "deadpool"];
 var winCounter = 0; // Number of user wins
 var guessCounter; // Number of guesses remaining
 var alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h',
@@ -29,6 +31,7 @@ initializeGame = function() {
     guessCounter = 10; 
     document.getElementById("winCounter").innerHTML = winCounter;
     document.getElementById("guessCounter").innerHTML = guessCounter;
+
 }
 
 // Replace the chosenHero with underscores and place it in the #heroCol div
@@ -37,12 +40,12 @@ disguisedHero = function() {
     // Target the heroCol div and create a list named disguise for the choseHero
     heroHolder = document.getElementById("heroCol");
     disguise = document.createElement("ul");
-    // Create a new ul for badGuess to go into during game, assign attr, place in div guessedCol
+    
+ // Create a new ul for badGuess to go into during game, assign attr, place in div guessedCol
     guessHolder = document.getElementById("guessed-Col");
     incorrectGuesses = document.createElement("ul")
-    incorrectGuesses.setAttribute("class", "incorrect-guessed");
+    incorrectGuesses.setAttribute("id", "incorrect-guessed");
     guessHolder.appendChild(incorrectGuesses);
-
 
     for (var i = 0; i < chosenHero.length; i++) {
         disguise.setAttribute("id", "my-hero");
@@ -82,7 +85,7 @@ document.onkeyup = function(event) {
             if (j === -1) {         
             guessCounter -= 1;
             document.getElementById("guessCounter").innerHTML = guessCounter;
-            incorrectGuesses = document.getElementById("incorrect-guessed");
+            // incorrectGuesses = document.getElementById("incorrect-guessed");
             badGuess = document.createElement("li");
             badGuess.innerHTML = userGuess.toUpperCase();
             incorrectGuesses.appendChild(badGuess);
