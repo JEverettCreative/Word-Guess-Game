@@ -17,14 +17,17 @@ var disguise; // List to place hidden word on viewport as "_"
 var disguisedLetter; // Letters of chosenHero converted to "_"
 var myBackgroundMusic = document.getElementById("backgroundMusic");
 
-playBackgroundMusic = function() { 
-   myBackgroundMusic.play();
+// // Set background music to loop when it ends. Onclick located in html
+loopBackgroundMusic = function() {
+    myBackgroundMusic.addEventListener("ended", function(){
+        this.currentTime = 0;
+        this.play();
+    }, false);
+    myBackgroundMusic.play();
 }
-
 pauseBackgroundMusic = function() {
     myBackgroundMusic.pause();
 }
-
 
 // Set up a new match with a new random hero chosen
 initializeGame = function() {
