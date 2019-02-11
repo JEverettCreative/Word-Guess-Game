@@ -15,6 +15,16 @@ var alreadyGuessed = [];
 var correctGuess = 0; // Counter for each correct guessed, used for scoring
 var disguise; // List to place hidden word on viewport as "_"
 var disguisedLetter; // Letters of chosenHero converted to "_"
+var myBackgroundMusic = document.getElementById("backgroundMusic");
+
+playBackgroundMusic = function() { 
+   myBackgroundMusic.play();
+}
+
+pauseBackgroundMusic = function() {
+    myBackgroundMusic.pause();
+}
+
 
 // Set up a new match with a new random hero chosen
 initializeGame = function() {
@@ -126,7 +136,6 @@ nextMatch = function(){
         disguisedHero();
     }
 }
-
 
 initializeGame();
 
