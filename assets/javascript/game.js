@@ -15,7 +15,7 @@ var alreadyGuessed = [];
 var correctGuess = 0; // Counter for each correct guessed, used for scoring
 var disguise; // List to place hidden word on viewport as "_"
 var disguisedLetter; // Letters of chosenHero converted to "_"
-var myBackgroundMusic = document.getElementById("backgroundMusic");
+var myBackgroundMusic = document.getElementById("backgroundMusic"); // Music
 
 // // Set background music to loop when it ends. Onclick located in html
 loopBackgroundMusic = function() {
